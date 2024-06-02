@@ -21,11 +21,7 @@ public class WeaponInfoUI : MonoBehaviour
         WeaponName.text = weapon.name;
     }
 
-    public void UpdateClipInfo(Weapon weapon)
-    {
-        WeaponClipContent.text = weapon.ClipContent.ToString();
-    }
-
+   
     public void UpdateAmmoAmount(int amount)
     {
         AmmoTypeCount.text = amount.ToString();

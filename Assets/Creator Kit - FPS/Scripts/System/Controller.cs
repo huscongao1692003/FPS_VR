@@ -19,8 +19,6 @@ public class Controller : MonoBehaviour
 
     public OVRInput.Controller LeftController;
     public OVRInput.Controller RightController;
-
-    public GameObject[] startingWeapons;
   
 
     [Header("Control Settings")]
@@ -81,8 +79,8 @@ public class Controller : MonoBehaviour
                 FootstepPlayer.PlayClip(JumpingAudioClip, 0.8f, 1.1f);
             }
 
-            bool running = m_Weapons[m_CurrentWeapon].CurrentState == Weapon.WeaponState.Idle && OVRInput.Get(OVRInput.Button.PrimaryThumbstick);
-            float actualSpeed = running ? RunningSpeed : PlayerSpeed;
+          
+            float actualSpeed = PlayerSpeed;
 
             if (loosedGrounding)
             {
@@ -94,7 +92,7 @@ public class Controller : MonoBehaviour
             Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
             transform.Rotate(0, secondaryAxis.x * 45.0f * Time.deltaTime, 0);
 
-            m_Weapons[m_CurrentWeapon].triggerDown = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+            
 
            
             if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick))
