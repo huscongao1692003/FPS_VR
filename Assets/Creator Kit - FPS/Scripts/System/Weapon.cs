@@ -37,7 +37,6 @@ public class Weapon : MonoBehaviour
     public int clipSize = 4;
     public float damage = 1.0f;
     public int ammoType = -1;
-    public GameObject projectilePrefab;
     public Transform EndPoint;
     public AdvancedSettings advancedSettings;
 
@@ -80,16 +79,6 @@ public class Weapon : MonoBehaviour
             PoolSystem.Instance.InitPool(PrefabRayTrail, trailPoolSize);
         }
 
-        if (projectilePrefab != null)
-        {
-            int size = Mathf.Max(4, clipSize) * advancedSettings.projectilePerShot;
-            for (int i = 0; i < size; ++i)
-            {
-                GameObject p = Instantiate(projectilePrefab);
-                p.gameObject.SetActive(false);
-                m_ProjectilePool.Enqueue(p);
-            }
-        }
     }
 
     public void PutAway()
