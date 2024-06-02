@@ -20,8 +20,8 @@ public class Controller : MonoBehaviour
     public OVRInput.Controller LeftController;
     public OVRInput.Controller RightController;
 
-    public Weapon[] startingWeapons;
-    public AmmoInventoryEntry[] startingAmmo;
+    public GameObject[] startingWeapons;
+  
 
     [Header("Control Settings")]
     public float PlayerSpeed = 5.0f;
@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour
     private bool m_IsPaused = false;
     private int m_CurrentWeapon;
 
-    private OVRPlayerController m_CharacterController;
+    private OVRInput.Controller m_CharacterController;
     private bool m_Grounded;
     private float m_GroundedTimer;
     private float m_SpeedAtJump = 0.0f;
@@ -55,21 +55,14 @@ public class Controller : MonoBehaviour
         m_IsPaused = false;
         m_Grounded = true;
 
-        m_CharacterController = GetComponent<OVRPlayerController>();
+        m_CharacterController = GetComponent<OVRInput.Controller>();
 
         
-        for (int i = 0; i < startingAmmo.Length; ++i)
-        {
-            ChangeAmmo(startingAmmo[i].ammoType, startingAmmo[i].amount);
-        }
-
+      
         m_CurrentWeapon = -1;
         ChangeWeapon(0);
 
-        for (int i = 0; i < startingAmmo.Length; ++i)
-        {
-            m_AmmoInventory[startingAmmo[i].ammoType] = startingAmmo[i].amount;
-        }
+    
     }
 
     void Update()
@@ -141,32 +134,6 @@ public class Controller : MonoBehaviour
         m_Weapons[m_CurrentWeapon].Selected();
     }
 
-    public int GetAmmo(int ammoType)
-    {
-        int value = 0;
-        m_AmmoInventory.TryGetValue(ammoType, out value);
-
-        return value;
-    }
-
-    public void ChangeAmmo(int ammoType, int amount)
-    {
-        if (!m_AmmoInventory.ContainsKey(ammoType))
-            m_AmmoInventory[ammoType] = 0;
-
-        var previous = m_AmmoInventory[ammoType];
-        m_AmmoInventory[ammoType] = Mathf.Clamp(m_AmmoInventory[ammoType] + amount, 0, 999);
-
-        if (m_Weapons[m_CurrentWeapon].ammoType == ammoType)
-        {
-            if (previous == 0 && amount > 0)
-            {
-                m_Weapons[m_CurrentWeapon].Selected();
-            }
-
-            WeaponInfoUI.Instance.UpdateAmmoAmount(GetAmmo(ammoType));
-        }
-    }
 
     public void PlayFootstep()
     {

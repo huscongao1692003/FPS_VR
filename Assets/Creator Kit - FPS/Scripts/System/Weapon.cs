@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
-using Oculus.Interaction.Input;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -49,16 +46,13 @@ public class Weapon : MonoBehaviour
 
     public int ammoType = -1;
 
-    public Projectile projectilePrefab;
+    public GameObject projectilePrefab;
     public float projectileLaunchForce = 200.0f;
 
     public Transform EndPoint;
 
     public AdvancedSettings advancedSettings;
 
-    [Header("Animation Clips")]
-    public AnimationClip FireAnimationClip;
-    public AnimationClip ReloadAnimationClip;
 
     [Header("Audio Clips")]
     public AudioClip FireAudioClip;
@@ -105,7 +99,7 @@ public class Weapon : MonoBehaviour
 
     List<ActiveTrail> m_ActiveTrails = new List<ActiveTrail>();
 
-    Queue<Projectile> m_ProjectilePool = new Queue<Projectile>();
+    Queue<GameObject> m_ProjectilePool = new Queue<GameObject>();
 
     int fireNameHash = Animator.StringToHash("fire");
     int reloadNameHash = Animator.StringToHash("reload");
@@ -127,17 +121,14 @@ public class Weapon : MonoBehaviour
             int size = Mathf.Max(4, clipSize) * advancedSettings.projectilePerShot;
             for (int i = 0; i < size; ++i)
             {
-                Projectile p = Instantiate(projectilePrefab);
+                GameObject p = Instantiate(projectilePrefab);
                 p.gameObject.SetActive(false);
                 m_ProjectilePool.Enqueue(p);
             }
         }
     }
 
-    public void PickedUp(Controller c)
-    {
-        m_Owner = c;
-    }
+  
 
     public void PutAway()
     {
@@ -154,35 +145,20 @@ public class Weapon : MonoBehaviour
 
     public void Selected()
     {
-        var ammoRemaining = m_Owner.GetAmmo(ammoType);
+       
 
-        gameObject.SetActive(ammoRemaining != 0 || m_ClipContent != 0);
 
-        if (FireAnimationClip != null)
-            m_Animator.SetFloat("fireSpeed", FireAnimationClip.length / fireRate);
+   
 
-        if (ReloadAnimationClip != null)
-            m_Animator.SetFloat("reloadSpeed", ReloadAnimationClip.length / reloadTime);
-
-        m_CurrentState = WeaponState.Idle;
-
-        triggerDown = false;
+        triggerDown = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger) || OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
         m_ShotDone = false;
 
         WeaponInfoUI.Instance.UpdateWeaponName(this);
         WeaponInfoUI.Instance.UpdateClipInfo(this);
-        WeaponInfoUI.Instance.UpdateAmmoAmount(m_Owner.GetAmmo(ammoType));
+        WeaponInfoUI.Instance.UpdateAmmoAmount(1000);
 
 
-        if (m_ClipContent == 0 && ammoRemaining != 0)
-        {
-            int chargeInClip = Mathf.Min(ammoRemaining, clipSize);
-            m_ClipContent += chargeInClip;
-           
-            m_Owner.ChangeAmmo(ammoType, -chargeInClip);
-            WeaponInfoUI.Instance.UpdateClipInfo(this);
-        }
-
+ 
         m_Animator.SetTrigger("selected");
     }
 
@@ -223,6 +199,7 @@ public class Weapon : MonoBehaviour
 
     void RaycastShot()
     {
+        //change raycast to gun not camera
         float spreadRatio = advancedSettings.spreadAngle / OVRManager.instance.GetComponent<Camera>().fieldOfView;
 
         Vector2 spread = spreadRatio * Random.insideUnitCircle;
@@ -286,47 +263,8 @@ public class Weapon : MonoBehaviour
             m_ShotTimer -= Time.deltaTime;
         }
 
-        if (m_CurrentState == WeaponState.Firing)
-        {
-            var info = m_Animator.GetCurrentAnimatorStateInfo(0);
-            if (info.normalizedTime >= info.length / 2.0f)
-            {
-                if (m_ClipContent == 0)
-                {
-                    StartReload();
-                }
-                else
-                {
-                    m_CurrentState = WeaponState.Idle;
-                }
-            }
-        }
-        else if (m_CurrentState == WeaponState.Reloading)
-        {
-            var info = m_Animator.GetCurrentAnimatorStateInfo(0);
-            if (info.normalizedTime >= info.length / 2.0f)
-            {
-                m_CurrentState = WeaponState.Idle;
-            }
-        }
 
-        for (int i = 0; i < m_ActiveTrails.Count; ++i)
-        {
-            var activeTrail = m_ActiveTrails[i];
-            activeTrail.remainingTime -= Time.deltaTime;
-            if (activeTrail.remainingTime < 0)
-            {
-                activeTrail.renderer.gameObject.SetActive(false);
-                m_ActiveTrails.RemoveAt(i);
-                --i;
-            }
-            else
-            {
-                activeTrail.renderer.SetPosition(0, activeTrail.renderer.GetPosition(0) + activeTrail.direction * 100.0f * Time.deltaTime);
-            }
-        }
-
-        if (triggerDown)
+        if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger) || OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
         {
             if (triggerType == TriggerType.Auto || !m_ShotDone)
             {
@@ -336,18 +274,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    void StartReload()
-    {
-        if (m_CurrentState != WeaponState.Idle || m_ClipContent == clipSize || m_Owner.GetAmmo(ammoType) == 0)
-            return;
-
-        m_CurrentState = WeaponState.Reloading;
-
-        m_Source.PlayOneShot(ReloadAudioClip);
-
-        m_Animator.SetTrigger("reload");
-
-    }
+  
 
    
 }
