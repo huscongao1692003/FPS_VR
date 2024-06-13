@@ -834,7 +834,7 @@ MonoBehaviour:
   bullet: {fileID: 7030646001810800358, guid: e9ad4a910881da84fae1368b31e1a753, type: 3}
   bulletPosision: {fileID: 375015480}
   shotDelay: 0.2
-  bulletSpeed: 0
+  bulletSpeed: 3000
   audioSource: {fileID: 113826159}
 --- !u!1 &116158330
 GameObject:

@@ -172,25 +172,6 @@ public class GameSystem : MonoBehaviour
         LevelSelectionUI.Instance.Init();
     }
 
-    void Update()
-    {
-        if (m_TimerRunning)
-        {
-            m_Timer += Time.deltaTime;
-            
-            GameSystemInfo.Instance.UpdateTimer(m_Timer);
-        }
-
-        Transform playerTransform = Controller.Instance.transform;
-        
-        
-        //UI Update
-        MinimapUI.Instance.UpdateForPlayerTransform(playerTransform);
-       
-        if(FullscreenMap.Instance.gameObject.activeSelf)
-            FullscreenMap.Instance.UpdateForPlayerTransform(playerTransform);
-    }
-
     public float GetFinalTime()
     {
         int missedTarget = m_TargetCount - m_TargetDestroyed;
