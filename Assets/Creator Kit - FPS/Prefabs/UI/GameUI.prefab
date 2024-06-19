@@ -1306,6 +1306,7 @@ GameObject:
   - component: {fileID: 2625390798198164661}
   - component: {fileID: 2603275343186446579}
   - component: {fileID: 1204009433395685269}
+  - component: {fileID: 2267469313515995117}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -1322,8 +1323,8 @@ RectTransform:
   m_GameObject: {fileID: 2625390798198164682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4311552892326250233}
   - {fileID: 2625390796576526452}
@@ -1338,8 +1339,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_SizeDelta: {x: 775, y: 490}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2625390798198164663
 Canvas:
   m_ObjectHideFlags: 0
@@ -1349,7 +1350,7 @@ Canvas:
   m_GameObject: {fileID: 2625390798198164682}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1385,7 +1386,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2625390798198164661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1514,6 +1515,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PositiveSound: {fileID: 8300000, guid: 61507aebad0cf874aa8c0d42fcaa4e24, type: 3}
   NegativeSound: {fileID: 8300000, guid: dae5819be412de34a926b07afa6b8597, type: 3}
+--- !u!114 &2267469313515995117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2625390798198164682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f351d515b38b4a4490d5081b0d9d9ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: -0.3, y: -0.2, z: 1}
+  smoothAmount: 1
 --- !u!1 &2625390798215785937
 GameObject:
   m_ObjectHideFlags: 0
