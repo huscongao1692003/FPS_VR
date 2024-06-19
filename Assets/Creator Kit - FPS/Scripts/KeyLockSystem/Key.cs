@@ -15,6 +15,7 @@ public class Key : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("da cham vao key");
         var keychain = other.GetComponent<Keychain>();
 
         if (keychain != null)
