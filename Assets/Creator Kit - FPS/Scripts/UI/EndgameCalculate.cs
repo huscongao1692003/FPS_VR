@@ -1,0 +1,35 @@
+
+using UnityEngine;
+using UnityEngine.UI;
+
+public class EndgameCalculate : MonoBehaviour
+{
+    public static EndgameCalculate Instance { get; private set; }
+
+    public Text TargetDestroyed;
+    public Text Penalty;
+    public Text FinalScore;
+
+    void Awake()
+    {
+        Instance = this;
+        gameObject.SetActive(false);
+    }
+
+    public void Display()
+    {
+        gameObject.SetActive(true);
+
+        int targetDestroyed = GameSystem.Instance.DestroyedTarget;
+        int totalTarget = GameSystem.Instance.TargetCount;
+        int missedTarget = totalTarget - targetDestroyed;
+        float penaltyAmount = GameSystem.Instance.TargetMissedPenalty * missedTarget;
+
+        TargetDestroyed.text = targetDestroyed + "/" + totalTarget;
+     
+        Penalty.text = missedTarget + "*" + GameSystem.Instance.TargetMissedPenalty.ToString("N2") + "s = " + penaltyAmount.ToString("N2") + "s";
+     
+
+        FinalScore.text = GameSystem.Instance.Score.ToString("N");
+    }
+}
