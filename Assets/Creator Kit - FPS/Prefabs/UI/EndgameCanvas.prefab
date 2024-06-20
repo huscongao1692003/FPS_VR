@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 6322812927473077194}
   - component: {fileID: 4881918488089000244}
   - component: {fileID: 8521803411228662676}
-  - component: {fileID: 8616334027395296434}
   m_Layer: 5
   m_Name: EndgameCanvas
   m_TagString: Untagged
@@ -260,20 +259,6 @@ MonoBehaviour:
   TargetDestroyed: {fileID: 852596724539947931}
   Penalty: {fileID: 1363219763342514748}
   FinalScore: {fileID: 3217121989369950479}
---- !u!114 &8616334027395296434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219435646765064847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f351d515b38b4a4490d5081b0d9d9ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0.5}
-  smoothAmount: 1
 --- !u!1 &1911067913608153922
 GameObject:
   m_ObjectHideFlags: 0

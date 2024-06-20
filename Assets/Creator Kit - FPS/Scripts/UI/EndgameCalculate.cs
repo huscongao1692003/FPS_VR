@@ -4,19 +4,15 @@ using UnityEngine.UI;
 
 public class EndgameCalculate : MonoBehaviour
 {
-    public static EndgameCalculate Instance { get; private set; }
+    
 
     public Text TargetDestroyed;
     public Text Penalty;
     public Text FinalScore;
 
-    void Awake()
-    {
-        Instance = this;
-        gameObject.SetActive(false);
-    }
+ 
 
-    public void Display()
+    public void Update()
     {
         gameObject.SetActive(true);
 
