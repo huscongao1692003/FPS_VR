@@ -397,6 +397,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GermSlime
       objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: a148bf2bf5d309646bda1b56264c815e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a148bf2bf5d309646bda1b56264c815e, type: 3}
       propertyPath: m_RootOrder
       value: 0
