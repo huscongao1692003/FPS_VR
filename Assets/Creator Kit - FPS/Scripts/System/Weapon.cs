@@ -29,9 +29,10 @@ public class Weapon : MonoBehaviour
     }
     private void Update()
     {
-        if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger) || OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
+        if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
         {
             Shoot();
+            GunShotAudio();
         }
     }
     private void GunShotAudio()
